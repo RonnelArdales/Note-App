@@ -17,6 +17,8 @@ import { FAB } from 'react-native-paper';
 import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 
 
+
+
 export default function NoteListScreen() {
     const navigation = useNavigation()
     const [loading, setLoading,] = useState<boolean>(false)
@@ -24,15 +26,26 @@ export default function NoteListScreen() {
     const [searchQuery, setSearchQuery] = useState('');
     const [resultnotfound, setResultNotDFound] = useState(false);
 
+ 
+  //   const sorted = ()=>{ notelist?.sort((a,b)=>{
+  //     const dateA = new Date(`${a.Datetime}`).valueOf();
+  //     const dateB = new Date(`${b.Datetime}`).valueOf();
+  //     if(dateA > dateB){
+  //       return 1; // return -1 here for DESC order
+  //     }
+  //     return -1 // return 1 here for DESC Order
+  //   });
+  // }
 
 
+  
     const retrieveData = async () => {
         setLoading(true)
         const addnote = await getData ('addnote');
         if (addnote){
                 const json = JSON.parse(addnote);
                 setNotelist(json)
-    
+        
         }else{
             setNotelist(null);
         }
@@ -46,10 +59,7 @@ export default function NoteListScreen() {
         retrieveData();
        
     }
-
-
   
-
     const deletetask =(index: number) =>{
         if (notelist){
             Alert.alert("Delete", "Do you really want to delete this task",
@@ -102,17 +112,32 @@ export default function NoteListScreen() {
     useFocusEffect(
         useCallback(() => {
             retrieveData(); 
-        
+
         }, []) 
       );
+
+const handleonclear = () => {
+  setSearchQuery('')
+  retrieveData()
+  setResultNotDFound(false)
+}
 
 
   return (
     <View style={[styles.container, StyleSheet.absoluteFillObject]}>
       
 
+      {!notelist?.length ? 
+          <View style={[{flex:1, height:"100%", backgroundColor:"lightblue", justifyContent:"center", alignItems:"center",}, StyleSheet.absoluteFillObject]}>
+            <Text style ={{ fontSize:30, fontWeight:"bold", bottom:60}}>Notes will Appear here</Text>
+
+          </View>  
+        :null
+        }
+
+
 {notelist?.length ?(
-            <SearchBar value={searchQuery} onChangeText={handleOnSearchInput} />
+            <SearchBar value={searchQuery} onChangeText={handleOnSearchInput} onclear={handleonclear} />
         ):  null
         }
   
@@ -155,23 +180,12 @@ export default function NoteListScreen() {
                       color={"gray"} 
                       onPress={ () => {deletetask(Index)}} > </Ionicons>
           </ListItem>
-       
-
             ) )}
-
-
-{!notelist?.length ? 
-          <View style={{flex:1, height:Dimensions.get("screen").height, backgroundColor:"skyblue", justifyContent:"center", alignItems:"center" }}>
-            <Text style ={{ fontSize:30, fontWeight:"bold", bottom:60}}>Notes will Appear here</Text>
-
-          </View>  
-        :null
-        
-        }
         
         </Fragment>
         </ScrollView>     
           }
+
 
          
 <FAB label='add note'  small icon={'plus'} onPress={() => {navigation.navigate('Add')}} style={{position:"absolute" , alignSelf:"center", bottom:20, backgroundColor:"#0066ff" }}/>

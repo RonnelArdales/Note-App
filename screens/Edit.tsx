@@ -97,7 +97,6 @@ export default function EditNoteScreen() {
       />
 </ScrollView>
 {note.Title != Title || note.Description != Description ? (<FAB  large icon={'check'} onPress={submit} style={{position:"absolute" , right:35, bottom:140, backgroundColor:"#0066ff"  }} />) : null}
-<FAB  large icon={'close'} color={'white'}  onPress={() => { navigation.goBack('List')}} style={{position:"absolute" , right:35, bottom:70, backgroundColor:"red"}} />
 
 {/* {Title.trim().length == setTitle  ? (  )  :} */}
     </View>

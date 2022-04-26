@@ -17,10 +17,11 @@ export default function AddNoteScreen() {
     const [Datetime,setDate] = useState<string>("");
     const submit = async (index:number) => {
         if (!Title){
-            Alert.alert("Error", "Please Input a task")
+            Alert.alert("Error", "Please Input a Title")
         }else{
             const addnote = await getData ('addnote');
             const data ={
+                
                 Title: Title,
                 Description:Description,
                 Datetime:Datetime
@@ -45,17 +46,14 @@ export default function AddNoteScreen() {
     }
     
       useEffect(() => {
-
         var monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May','Jun',
         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
         let date = new Date().getDate()
         let Datemonth = monthNames[new Date().getMonth() + 1]
         let Dateyear = new Date().getFullYear()
         let Htime = new Date().getHours()  
         let Mtime = new Date().getMinutes()
         let prepend = Htime >= 12? "PM":"AM" 
-          
         setDate( date + " " + Datemonth + ' ' + Dateyear + ' ' + Htime + ':' + Mtime + ' ' + prepend  )
       },[])
 
@@ -81,11 +79,10 @@ export default function AddNoteScreen() {
       autoCorrect={false}
       underlineColorAndroid="transparent"
       underlineColor='transparent'
-      
       />
 </ScrollView>
-<FAB  large icon={'check'} onPress={submit} style={{position:"absolute" , right:35, bottom:140, backgroundColor:"#0066ff"  }} />
-<FAB  large icon={'close'} color={'white'}  onPress={() => { navigation.goBack('List')}} style={{position:"absolute" , right:35, bottom:70, backgroundColor:"red" }} />
+<FAB  large icon={'check'} onPress={submit} style={{position:"absolute" , right:35, bottom:80, backgroundColor:"#0066ff"  }} />
+
     
     </View>
   );

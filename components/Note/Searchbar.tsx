@@ -1,11 +1,12 @@
 import { View, StyleSheet,  } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import React from 'react';
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { colors } from 'react-native-elements';
+import { color } from '@rneui/base';
 
 
- const SearchBar = ({  value, onChangeText}) => {
+ const SearchBar = ({  value, onclear ,onChangeText}) => {
     return(
         <View style={style.container}>
        
@@ -17,8 +18,16 @@ import { colors } from 'react-native-elements';
        underlineColor={"transparent"}
        activeUnderlineColor={"transparent"}
             autoCorrect={false}
-            >
-         </TextInput>
+            />
+     {value ? 
+     (<AntDesign 
+     name="close" 
+     size={20} 
+     color={colors.primary} 
+     onPress={onclear} 
+     style={{position:"absolute", right:35}}
+     />
+     ) : null}
         </View>
     
     )
@@ -27,7 +36,8 @@ export default SearchBar
 
 const style=StyleSheet.create({
 container:{
-backgroundColor:"transparent"
+backgroundColor:"transparent",
+justifyContent:"center"
 },
 searchbar:{
     

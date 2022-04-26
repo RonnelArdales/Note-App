@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
 import { Header } from 'react-native-elements/dist/header/Header';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AddNoteScreen from '../screens/Add';
@@ -7,13 +8,15 @@ import EditNoteScreen from '../screens/Edit';
 import NoteListScreen from '../screens/List';
 import LoginScreen from '../screens/Login';
 import RegisterScreen from '../screens/register';
-
 import { NoteStackParamlist } from '../types';
-
-
+import { Dimensions } from 'react-native';
+import {  StyleSheet } from 'react-native';
 const Stack = createNativeStackNavigator<NoteStackParamlist>();
 
 export default function TaskNavigator() {
+
+
+
   return (
     <Stack.Navigator 
     screenOptions={
@@ -36,7 +39,7 @@ export default function TaskNavigator() {
       <Stack.Screen name="List"  
       component={NoteListScreen}  
       options={{headerShown:true, 
-      headerTitleAlign:'center', 
+      headerTitleAlign:'left', 
       title:"Note App", 
       headerTitleStyle:{fontSize:28},
       headerTintColor:"white",
@@ -49,7 +52,9 @@ export default function TaskNavigator() {
 
       <Stack.Screen name="Add" 
       component={AddNoteScreen} 
-      options={{headerTitleAlign:"center", 
+      
+      options={{headerTitleAlign:"center",
+      headerBackVisible:true,
       headerShown:true, 
       title:"Add note",
       headerTintColor:"white",
@@ -58,6 +63,7 @@ export default function TaskNavigator() {
       headerStyle: {
       backgroundColor:"#0066ff", 
     }
+  
     }} 
       ></Stack.Screen>
 
@@ -65,6 +71,7 @@ export default function TaskNavigator() {
       component={EditNoteScreen}  
       options={{headerTitleAlign:'center', 
       headerShown:true, 
+      headerBackVisible:true,
       title:"Edit note",
       headerTintColor:"white",
       headerTitleStyle:{fontSize:28},
@@ -77,3 +84,6 @@ export default function TaskNavigator() {
     </Stack.Navigator>
   );
 }
+
+
+

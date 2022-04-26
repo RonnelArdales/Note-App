@@ -36,12 +36,13 @@ repassword: yup.string().required('Password is required')
 
 
 const handlersubmit = async () => {
+
         if(loginschema){
           Alert.alert("Error", "Signup Unsuccessfully")
         }else{
           try{
             var user = {
-          Name:fname,
+          Name:Name,
           Lastname:Lastname,
           Email:Email,
           Password:Password
@@ -101,7 +102,7 @@ const handlersubmit = async () => {
                      label={'FIRST NAME'}
                      placeholder={'FIRST NAME'}
                      placeholderTextColor={'#bbbbbb'}
-                     value={values.fname}
+                     value={[values.fname, Name] }
                      autoComplete={false}
                      style={styles.textinputstyle}
                      mode="flat"
