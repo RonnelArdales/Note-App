@@ -7,19 +7,19 @@ import { Ionicons } from '@expo/vector-icons';
  export default function NoTFound() {
     return (
         <View style={[  style.container]}>
-            <View style={{ alignSelf:"center", justifyContent:"center", marginBottom:50, height:200, width:200}}>
+            <View style={{ alignSelf:"center", marginVertical:"50%"}}>
         <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/5058/5058432.png' }}
                                   style={{
                                     resizeMode:"cover",
-                                    height:100,
-                                    width:100,
-                                    marginTop:0,
+                                    height:120,
+                                    width:120,
+                                    marginLeft:10,
                                     backgroundColor:"transparent",
                                  alignSelf:"center"
                                   }}
                                   >
                                   </Image>
-     <Text style={{justifyContent:"center", fontSize:25, fontWeight:"bold", marginBottom:20}}> Note not Found </Text>
+     <Text style={{alignSelf:"center", fontSize:25, fontWeight:"bold", marginTop:15,}}> Note not Found </Text>
      </View>
         </View>
 
@@ -28,15 +28,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const style = StyleSheet.create({
     container:{
-        alignItems:"center",
-        justifyContent:"center",
-        zIndex:1,
-        flex:1,
-        marginTop:51,
-        height:620,
-        width:Dimensions.get('screen').width,
-        position:"absolute",
-  
+        height:Dimensions.get('screen').height - 210,
         
     }
 })

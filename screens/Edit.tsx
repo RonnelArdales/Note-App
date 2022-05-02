@@ -9,6 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { string } from 'yup';
 import { getData, storeData } from '../Database/Storedata';
 import { ScrollView } from 'react-native-gesture-handler';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 
 type Iroute = {
   "params": NoteStackParamlist ['EditNote'];
@@ -67,53 +68,90 @@ export default function EditNoteScreen() {
 
 
     return (
-    <View style={[styles.container, StyleSheet.absoluteFillObject]}>
+      <View style={{height:"100%", backgroundColor:"lightblue"}} >
+      <View style={{height:95, backgroundColor:"#0066ff", flexDirection:"row", justifyContent:"space-between",}}>
+        <AntDesign name="arrowleft" color={"white"} size={28} style={{marginTop:54, marginLeft:18}} onPress={() => {navigation.goBack()}} />
+        <Text style={{color:"white", fontSize:25, fontWeight:"bold", alignSelf:"center", marginTop:40,  marginLeft:7}}>Edit Note</Text>  
+        <View style={{width:50, padding:0, backgroundColor:"#0066ff",}}>
+        {note.Title != Title || note.Description != Description  ? (<Ionicons name="checkmark-outline" size={28} color={"white"} style={{ alignSelf:"center",  marginTop:54, marginRight:18}} onPress={submit} />  ) : null}
+        </View>
+      </View>
+    <ScrollView>
+  <View style ={{flex:1, backgroundColor:"lightblue", marginBottom:15}}>
+  <Text style={{alignSelf:"flex-end",marginHorizontal:17, marginTop:12, fontSize:16 }}>{note.Datetime}</Text>
+  <View style={{  paddingLeft: 20, paddingRight: 20, backgroundColor:"lightblue"}}>
+        <TextInput
+          mode="flat"
+          numberOfLines={2}
+          style={{    height: 50,
+            fontSize: 19,
+            borderColor: "black",
+            borderRadius: 20,
+            marginVertical:20,
+            marginTop:18,
+            borderWidth: 1,
+            backgroundColor:"ivory", 
+            textAlign: "left",}}
+          placeholder="Title"
+          placeholderTextColor="#AFAFB0"
+          theme={{
+            roundness: 20,
+          }}
+          value={Title}
+          onChangeText={setTitle}
+          underlineColor="transparent"
+          activeUnderlineColor="transparent"
+          selectionColor="lightblue"
+          autoComplete={false}
+          defaultValue={Title}
+        />
 
-      <Text style={{alignSelf:"flex-end", marginBottom:5}}>{note.Datetime}</Text>
-      <TextInput 
-      placeholder={'Title'}
-      value={Title}
-      onChangeText={setTitle}
-      autoComplete={false}
-      style={{backgroundColor:"ivory", marginHorizontal:6, fontSize:20,  height:50}}
-      defaultValue={Title}
+<View style={{ }}></View>
+        <TextInput
+          mode="flat"
+          multiline={true}
+          numberOfLines={5}
+          style={{    minHeight: 500,
+            fontSize: 19,
+            borderColor:"black",
+            borderRadius: 9,
+            borderWidth: 1,
+            backgroundColor:"ivory", }}
+          placeholder="Type here....."
+          placeholderTextColor="#AFAFB0"
+          theme={{
+            roundness: 9,
+          }}
+          value={Description}
+          onChangeText={setDescription}
+          underlineColor="transparent"
+          activeUnderlineColor="transparent"
+          selectionColor="#005CEA"
+          textAlignVertical="top"
+          autoComplete={false}
+          defaultValue={Description}
+        />
+      </View>
       
-      />
-      <ScrollView>
-      <TextInput 
-      placeholder={'Type Here...'}
-      value={Description}
-      onChangeText={setDescription}
-      autoComplete={false}
-      multiline={true}
-      
-      style={{backgroundColor:"ivory",  borderWidth:0, fontSize:20, marginHorizontal:6, marginTop:5,}}
-      activeUnderlineColor={'transparent'}
-      autoCorrect={false}
-      underlineColorAndroid="transparent"
-      underlineColor='transparent'
-      defaultValue={Description}
-      
-      />
-</ScrollView>
-{note.Title != Title || note.Description != Description ? (<FAB  large icon={'check'} onPress={submit} style={{position:"absolute" , right:35, bottom:80, backgroundColor:"#0066ff"  }} />) : null}
-
-{/* {Title.trim().length == setTitle  ? (  )  :} */}
-    </View>
-  );
+      </View>
+     
+  </ScrollView>
+  </View>
+);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding:15,
-    height:Dimensions.get('window').height - 40,
-    zIndex:-1,
-    backgroundColor:"ivory", 
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
+container: {
+  flex: 1,
+  padding:15,
+  height:Dimensions.get('window').height - 40,
+  zIndex:-1,
+  backgroundColor:"ivory", 
+
+},
+title: {
+  fontSize: 20,
+  fontWeight: 'bold',
+},
 
 });

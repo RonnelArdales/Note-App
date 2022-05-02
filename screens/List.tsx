@@ -1,8 +1,8 @@
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { useFocusEffect, useNavigation } from '@react-navigation/core';
 import { ListItem } from 'react-native-elements';
 import React, { Fragment, useCallback, useState } from 'react';
-import { Alert, Button, Dimensions, FlatList, KeyboardAvoidingView, ScrollView, StyleSheet } from 'react-native';
+import { Alert, Button, Dimensions, FlatList, KeyboardAvoidingView, ScrollView, StyleSheet, Image, StatusBar } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
@@ -15,6 +15,7 @@ import NoTFound from '../components/Note/NotFound';
 import Removelist from '../components/Note/Disabled';
 import { FAB } from 'react-native-paper';
 import { Item } from 'react-native-paper/lib/typescript/components/List/List';
+import Emptynote from '../components/Note/emptynote';
 
 
 
@@ -124,38 +125,43 @@ const handleonclear = () => {
 
 
   return (
-    <View style={[styles.container, StyleSheet.absoluteFillObject]}>
+
+    
+    <View style={{height: Dimensions.get("screen").height-47 , backgroundColor:"lightblue"}}>
+      <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#2155CD" translucent = {true}/>
       
+        <View style={{height:95, backgroundColor:"#0066ff", flexDirection:"row", justifyContent:"space-between",}}>
+          <Text style={{color:"white", fontSize:25, fontWeight:"bold", alignSelf:"center", marginTop:40,  marginLeft:10}}>Note App</Text>  
+        </View>
+          
+        { !searchQuery ? (<FAB label='add note'  small icon={'plus'} onPress={() => {navigation.navigate('Add')}} style={{position:"absolute" , alignSelf:"center", bottom:20, backgroundColor:"#0066ff", zIndex:100 }}/>) : null }
 
-      {!notelist?.length ? 
-          <View style={[{flex:1, height:"100%", backgroundColor:"lightblue", justifyContent:"center", alignItems:"center",}, StyleSheet.absoluteFillObject]}>
-            <Text style ={{ fontSize:30, fontWeight:"bold", bottom:60}}>Notes will Appear here</Text>
-
-          </View>  
+        {!notelist?.length ? 
+            <Emptynote/>
+      
+          // <View style={[{flex:1, height:"100%", backgroundColor:"lightblue", justifyContent:"center", alignItems:"center",}, StyleSheet.absoluteFillObject]}>
+          //   <Text style ={{ fontSize:30, fontWeight:"bold", bottom:60}}>Notes will Appear here</Text>
+          // </View>  
         :null
         }
-
-
-{notelist?.length ?(
+        <ScrollView>
+        {notelist?.length ?(
             <SearchBar value={searchQuery} onChangeText={handleOnSearchInput} onclear={handleonclear} />
         ):  null
         }
-  
-        {resultnotfound ? <NoTFound/> :
-        
-        <ScrollView>
+
+{resultnotfound ? <NoTFound/> :
         <Fragment>
             {notelist?.map((NOTE:note, Index:number) =>( 
             <ListItem    onPress={()  => {navigation.navigate("Main" , {
               screen: "EditNote",
               params: {note:NOTE, index:Index}
             })}}
-                 key={Index -1}
+                 key={Index}
                   bottomDivider
                 containerStyle={{
                   backgroundColor:"ivory", 
-                  borderRadius:15, 
-                  
+                  borderRadius:15,     
                   padding:10,
                   paddingVertical:12,
                   flexShrink:1
@@ -173,38 +179,31 @@ const handleonclear = () => {
             </ListItem.Content>
             <Ionicons name = 'trash-outline' 
                       style={{
+                              borderColor:"black",
                               paddingRight:0, 
                               width:28,
-                              marginRight:8           }} 
-                      size={25} 
+                              marginRight:8 }} 
+                      size={28} 
                       color={"gray"} 
                       onPress={ () => {deletetask(Index)}} > </Ionicons>
           </ListItem>
             ) )}
         
         </Fragment>
-        </ScrollView>     
+  
           }
-
-
-         
-<FAB label='add note'  small icon={'plus'} onPress={() => {navigation.navigate('Add')}} style={{position:"absolute" , alignSelf:"center", bottom:20, backgroundColor:"#0066ff" }}/>
-
+        </ScrollView>
+        
+        
     </View>
+
   );
 }
 
+
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor:"lightblue",
-    height:Dimensions.get('window').height - 56,
-    zIndex:-1,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
+
   listitemcontainer:{
 
       marginLeft:10,

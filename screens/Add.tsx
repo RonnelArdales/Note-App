@@ -1,14 +1,16 @@
 import { useNavigation, useNavigationState } from '@react-navigation/native';
-import { Alert, Dimensions, StyleSheet,  } from 'react-native';
+import { Alert, Dimensions, Keyboard, StyleSheet,  } from 'react-native';
 import { FAB, TextInput} from 'react-native-paper'
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
 import { Button} from '@rneui/base'
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { string } from 'yup';
 import { getData, storeData } from '../Database/Storedata';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 
 export default function AddNoteScreen() {
   const navigation = useNavigation()
@@ -58,32 +60,71 @@ export default function AddNoteScreen() {
       },[])
 
     return (
-    <View style={[styles.container, StyleSheet.absoluteFillObject]}>
-      <TextInput 
-      placeholder={'Title'}
-      value={Title}
-      onChangeText={setTitle}
-      autoComplete={false}
-      style={{backgroundColor:"ivory", marginHorizontal:6, fontSize:20,  height:50}}
-      />
-
+      <View style={{height:"100%", backgroundColor:"lightblue"}} >
+        <View style={{height:95, backgroundColor:"#0066ff", flexDirection:"row", justifyContent:"space-between",}}>
+          <AntDesign name="arrowleft" color={"white"} size={28} style={{marginTop:54, marginLeft:18}} onPress={() => {navigation.goBack()}} />
+          <Text style={{color:"white", fontSize:25, fontWeight:"bold", alignSelf:"center", marginTop:40,  marginLeft:7}}>Add Note</Text>  
+          <View style={{width:50, padding:0, backgroundColor:"#0066ff",}}>
+          {Title.length > 0  || Description.length > 0 ? (<Ionicons name="checkmark-outline" size={28} color={"white"} style={{ alignSelf:"center",  marginTop:54, marginRight:18}} onPress={submit} />  ) : null }
+          </View>
+        </View>
       <ScrollView>
-      <TextInput 
-      placeholder={'Type Here...'}
-      value={Description}
-      onChangeText={setDescription}
-      autoComplete={false}
-      multiline={true}
-      style={{backgroundColor:"ivory",  borderWidth:0, fontSize:20, marginHorizontal:6, marginTop:5, }}
-      activeUnderlineColor={'transparent'}
-      autoCorrect={false}
-      underlineColorAndroid="transparent"
-      underlineColor='transparent'
-      />
-</ScrollView>
-<FAB  large icon={'check'} onPress={submit} style={{position:"absolute" , right:35, bottom:80, backgroundColor:"#0066ff"  }} />
+    <View style ={{flex:1, backgroundColor:"lightblue", marginBottom:15}}>
+    <View style={{  paddingLeft: 20, paddingRight: 20, backgroundColor:"lightblue"}}>
+          <TextInput
+            mode="flat"
+            numberOfLines={2}
+            style={{    height: 50,
+              fontSize: 19,
+              borderColor: "black",
+              borderRadius: 20,
+              marginVertical:20,
+              marginTop:30,
+              borderWidth: 1,
+              backgroundColor:"ivory", 
+              textAlign: "left",}}
+            placeholder="Title"
+            placeholderTextColor="#AFAFB0"
+            theme={{
+              roundness: 20,
+            }}
+            value={Title}
+            onChangeText={setTitle}
+            underlineColor="transparent"
+            activeUnderlineColor="transparent"
+            selectionColor="lightblue"
+            autoComplete={false}
+          />
 
-    
+<View style={{ }}></View>
+          <TextInput
+            mode="flat"
+            multiline={true}
+            numberOfLines={5}
+            style={{    minHeight:500 ,
+              fontSize: 19,
+              borderColor:"black",
+              borderRadius: 9,
+              borderWidth: 1,
+              backgroundColor:"ivory", }}
+            placeholder="Type here....."
+            placeholderTextColor="#AFAFB0"
+            theme={{
+              roundness: 9,
+            }}
+            value={Description}
+            onChangeText={setDescription}
+            underlineColor="transparent"
+            activeUnderlineColor="transparent"
+            selectionColor="#005CEA"
+            textAlignVertical="top"
+            autoComplete={false}
+          />
+        </View>
+        
+        </View>
+       
+    </ScrollView>
     </View>
   );
 }

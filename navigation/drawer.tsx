@@ -38,7 +38,7 @@ export default function TaskNavigator() {
       {/* <Stack.Screen name='Register' component={RegisterScreen}  options={{headerTitleAlign:"center"}}/> */}
       <Stack.Screen name="List"  
       component={NoteListScreen}  
-      options={{headerShown:true, 
+      options={{headerShown:false, 
       headerTitleAlign:'left', 
       title:"Note App", 
       headerTitleStyle:{fontSize:28},
@@ -55,7 +55,7 @@ export default function TaskNavigator() {
       
       options={{headerTitleAlign:"center",
       headerBackVisible:true,
-      headerShown:true, 
+      headerShown:false, 
       title:"Add note",
       headerTintColor:"white",
       headerTitleStyle:{fontSize:28},
@@ -70,7 +70,7 @@ export default function TaskNavigator() {
       <Stack.Screen name="EditNote" 
       component={EditNoteScreen}  
       options={{headerTitleAlign:'center', 
-      headerShown:true, 
+      headerShown:false, 
       headerBackVisible:true,
       title:"Edit note",
       headerTintColor:"white",
