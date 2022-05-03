@@ -26,7 +26,7 @@ export default function EditNoteScreen() {
     const [Datetime,setDate] = useState<string>("");
     const submit = async () => {
         if (!Title){
-            Alert.alert("Error", "Please Input a task")
+            Alert.alert("Error", "Please Input a title")
         }else{
             const addnote = await getData ('addnote');
             const data ={
@@ -69,9 +69,9 @@ export default function EditNoteScreen() {
 
     return (
       <View style={{height:"100%", backgroundColor:"lightblue"}} >
-      <View style={{height:95, backgroundColor:"#0066ff", flexDirection:"row", justifyContent:"space-between",}}>
+      <View style={styles.header}>
         <AntDesign name="arrowleft" color={"white"} size={28} style={{marginTop:54, marginLeft:18}} onPress={() => {navigation.goBack()}} />
-        <Text style={{color:"white", fontSize:25, fontWeight:"bold", alignSelf:"center", marginTop:40,  marginLeft:7}}>Edit Note</Text>  
+        <Text style={styles.titlestyle}>Edit Note</Text>  
         <View style={{width:50, padding:0, backgroundColor:"#0066ff",}}>
         {note.Title != Title || note.Description != Description  ? (<Ionicons name="checkmark-outline" size={28} color={"white"} style={{ alignSelf:"center",  marginTop:54, marginRight:18}} onPress={submit} />  ) : null}
         </View>
@@ -154,4 +154,18 @@ title: {
   fontWeight: 'bold',
 },
 
+header:{
+  height:95, 
+  backgroundColor:"#0066ff", 
+  flexDirection:"row", 
+  justifyContent:"space-between",
+},
+titlestyle:{
+  color:"white", 
+  fontSize:25, 
+  fontWeight:"bold", 
+  alignSelf:"center", 
+  marginTop:40,  
+  marginLeft:7,
+}
 });

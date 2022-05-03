@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "Note-App",
+    "name": "Note App",
     "slug": "Note-App",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/icon2.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/splash2.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -22,10 +22,10 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.NoteApp.Rodatian",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff",
-        "softwareKeyboardLayoutMode": "pan"
+        "foregroundImage": "./assets/images/icon2.png",
+        "backgroundColor": "#ffffff"
       }
     },
     "web": {

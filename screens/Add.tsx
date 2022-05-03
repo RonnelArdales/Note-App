@@ -19,7 +19,7 @@ export default function AddNoteScreen() {
     const [Datetime,setDate] = useState<string>("");
     const submit = async (index:number) => {
         if (!Title){
-            Alert.alert("Error", "Please Input a Title")
+            Alert.alert("Error", "Please Input a title")
         }else{
             const addnote = await getData ('addnote');
             const data ={
@@ -61,9 +61,15 @@ export default function AddNoteScreen() {
 
     return (
       <View style={{height:"100%", backgroundColor:"lightblue"}} >
-        <View style={{height:95, backgroundColor:"#0066ff", flexDirection:"row", justifyContent:"space-between",}}>
-          <AntDesign name="arrowleft" color={"white"} size={28} style={{marginTop:54, marginLeft:18}} onPress={() => {navigation.goBack()}} />
-          <Text style={{color:"white", fontSize:25, fontWeight:"bold", alignSelf:"center", marginTop:40,  marginLeft:7}}>Add Note</Text>  
+        <View style={styles.header}>
+          <AntDesign name="arrowleft" 
+                     color={"white"}
+                     size={28} 
+                     style={{marginTop:54, 
+                             marginLeft:18}} 
+                     onPress={() => {navigation.goBack()}} 
+          />
+          <Text style={styles.titlestyle}>Add Note</Text>  
           <View style={{width:50, padding:0, backgroundColor:"#0066ff",}}>
           {Title.length > 0  || Description.length > 0 ? (<Ionicons name="checkmark-outline" size={28} color={"white"} style={{ alignSelf:"center",  marginTop:54, marginRight:18}} onPress={submit} />  ) : null }
           </View>
@@ -74,15 +80,7 @@ export default function AddNoteScreen() {
           <TextInput
             mode="flat"
             numberOfLines={2}
-            style={{    height: 50,
-              fontSize: 19,
-              borderColor: "black",
-              borderRadius: 20,
-              marginVertical:20,
-              marginTop:30,
-              borderWidth: 1,
-              backgroundColor:"ivory", 
-              textAlign: "left",}}
+            style={styles.textinputTitle}
             placeholder="Title"
             placeholderTextColor="#AFAFB0"
             theme={{
@@ -101,12 +99,7 @@ export default function AddNoteScreen() {
             mode="flat"
             multiline={true}
             numberOfLines={5}
-            style={{    minHeight:500 ,
-              fontSize: 19,
-              borderColor:"black",
-              borderRadius: 9,
-              borderWidth: 1,
-              backgroundColor:"ivory", }}
+            style={styles.textinputdesc}
             placeholder="Type here....."
             placeholderTextColor="#AFAFB0"
             theme={{
@@ -142,5 +135,37 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-
+  header:{
+    height:95, 
+    backgroundColor:"#0066ff", 
+    flexDirection:"row", 
+    justifyContent:"space-between",
+  },
+  titlestyle:{
+    color:"white", 
+    fontSize:25, 
+    fontWeight:"bold", 
+    alignSelf:"center", 
+    marginTop:40,  
+    marginLeft:7,
+  },
+  textinputTitle:{
+    height: 50,
+    fontSize: 19,
+    borderColor: "black",
+    borderRadius: 20,
+    marginVertical:20,
+    marginTop:30,
+    borderWidth: 1,
+    backgroundColor:"ivory", 
+    textAlign: "left",
+  },
+  textinputdesc:{
+    minHeight:500 ,
+    fontSize: 19,
+    borderColor:"black",
+    borderRadius: 9,
+    borderWidth: 1,
+    backgroundColor:"ivory", 
+  }
 });

@@ -13,7 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
                                     resizeMode:"cover",
                                     height:120,
                                     width:120,
-                                    marginLeft:10,
+                                    marginLeft:15,
                                     backgroundColor:"transparent",
                                  alignSelf:"center"
                                   }}

@@ -46,7 +46,7 @@ export default function NoteListScreen() {
         if (addnote){
                 const json = JSON.parse(addnote);
                 setNotelist(json)
-        
+                console.log(json)
         }else{
             setNotelist(null);
         }
@@ -63,16 +63,16 @@ export default function NoteListScreen() {
   
     const deletetask =(index: number) =>{
         if (notelist){
-            Alert.alert("Delete", "Do you really want to delete this task",
+            Alert.alert("Delete", "Do you really want to delete this note",
                 [{
                     text: "Yes",
                     style:"destructive",
                     onPress: ()=>{
                  
-                  
+                      
                       notelist.splice (index, 1);
                         updatetask();
-               
+                        
                         
                     }
                 },
@@ -87,7 +87,6 @@ export default function NoteListScreen() {
     }
 
 
-
     const handleOnSearchInput = async TEXT =>{
       setSearchQuery(TEXT);
       if(!TEXT.trim()){
@@ -98,7 +97,6 @@ export default function NoteListScreen() {
       const filteredtask =  notelist?.filter(note  => {
           if(note.Title.toLocaleLowerCase().includes(TEXT.toLocaleLowerCase())){
               return notelist;
-        
           }
       })
 
@@ -109,11 +107,10 @@ export default function NoteListScreen() {
       }
     }
 
-
     useFocusEffect(
         useCallback(() => {
             retrieveData(); 
-
+            handleonclear()
         }, []) 
       );
 
@@ -122,59 +119,57 @@ const handleonclear = () => {
   retrieveData()
   setResultNotDFound(false)
 }
-
-
   return (
-
     
-    <View style={{height: Dimensions.get("screen").height-47 , backgroundColor:"lightblue"}}>
-      <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#2155CD" translucent = {true}/>
-      
-        <View style={{height:95, backgroundColor:"#0066ff", flexDirection:"row", justifyContent:"space-between",}}>
-          <Text style={{color:"white", fontSize:25, fontWeight:"bold", alignSelf:"center", marginTop:40,  marginLeft:10}}>Note App</Text>  
+    <View style={styles.screencontainer}>
+      <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#0066ff" translucent = {true}/>
+        <View style={styles.header}>
+        <Text style={styles.titlestyle}>Note App</Text>  
         </View>
           
-        { !searchQuery ? (<FAB label='add note'  small icon={'plus'} onPress={() => {navigation.navigate('Add')}} style={{position:"absolute" , alignSelf:"center", bottom:20, backgroundColor:"#0066ff", zIndex:100 }}/>) : null }
-
+        { !searchQuery ? 
+        (<FAB label='add note' 
+              small icon={'plus'} 
+              onPress={() => {navigation.navigate('Add')}} 
+              style={styles.button}/>) 
+          : null }
+        
+        {!notelist?.length ? <Emptynote/>:null}
         {!notelist?.length ? 
-            <Emptynote/>
-      
-          // <View style={[{flex:1, height:"100%", backgroundColor:"lightblue", justifyContent:"center", alignItems:"center",}, StyleSheet.absoluteFillObject]}>
-          //   <Text style ={{ fontSize:30, fontWeight:"bold", bottom:60}}>Notes will Appear here</Text>
-          // </View>  
-        :null
-        }
+        (<FAB label='add note'  
+              small icon={'plus'} 
+              onPress={() => {navigation.navigate('Add')}} 
+              style={styles.button}/>) 
+          : null}
+        
         <ScrollView>
         {notelist?.length ?(
-            <SearchBar value={searchQuery} onChangeText={handleOnSearchInput} onclear={handleonclear} />
-        ):  null
-        }
+            <SearchBar value={searchQuery} 
+                       onChangeText={handleOnSearchInput} 
+                       onclear={handleonclear} />)
+        :null}
 
-{resultnotfound ? <NoTFound/> :
+        {resultnotfound ? <NoTFound/> : 
         <Fragment>
             {notelist?.map((NOTE:note, Index:number) =>( 
-            <ListItem    onPress={()  => {navigation.navigate("Main" , {
-              screen: "EditNote",
-              params: {note:NOTE, index:Index}
-            })}}
-                 key={Index}
-                  bottomDivider
-                containerStyle={{
-                  backgroundColor:"ivory", 
-                  borderRadius:15,     
-                  padding:10,
-                  paddingVertical:12,
-                  flexShrink:1
-                }}
+            <ListItem    
+                onPress={()  => {navigation.navigate("Main" , {
+                    screen: "EditNote",
+                    params: {note:NOTE, index:Index}
+                          })}}
+
+                key={Index}
+                bottomDivider
+                containerStyle={styles.listitemconstyle}
                 style={{marginHorizontal:10,  
-                  borderRadius:15,  
-                  padding:0, 
-                  marginVertical:4 }}
+                        borderRadius:15,  
+                        padding:0, 
+                        marginVertical:4 }}
                   >  
 
             <ListItem.Content style={styles.listitemcontainer}>
               <ListItem.Title numberOfLines={1} style ={{ fontSize:18, fontWeight:"bold", width:"100%"}}>{NOTE.Title}</ListItem.Title>
-              <ListItem.Subtitle  numberOfLines={1} style={{ fontSize:18,marginVertical:1  , width:"100%"}}>{NOTE.Description ? NOTE.Description :  <Removelist/> }</ListItem.Subtitle>
+              <ListItem.Subtitle numberOfLines={1} style={{ fontSize:18,marginVertical:1, width:"100%"}}>{NOTE.Description ? NOTE.Description :  <Removelist/> }</ListItem.Subtitle>
               <ListItem.Subtitle style={{ fontSize:13, marginTop:1}}>{NOTE.Datetime}</ListItem.Subtitle>
             </ListItem.Content>
             <Ionicons name = 'trash-outline' 
@@ -185,28 +180,54 @@ const handleonclear = () => {
                               marginRight:8 }} 
                       size={28} 
                       color={"gray"} 
-                      onPress={ () => {deletetask(Index)}} > </Ionicons>
+                      onPress={ () => {deletetask(Index)}}>
+                      </Ionicons>
           </ListItem>
             ) )}
-        
         </Fragment>
-  
           }
         </ScrollView>
-        
-        
     </View>
 
   );
 }
 
-
-
 const styles = StyleSheet.create({
+  screencontainer:{
+    height: Dimensions.get("screen").height-47 , 
+    backgroundColor:"lightblue"
+  },
+  header:{
+    height:95, 
+    backgroundColor:"#0066ff", 
+    flexDirection:"row", 
+    justifyContent:"space-between",
+  },
+  titlestyle:{
+    color:"white", 
+    fontSize:25, 
+    fontWeight:"bold", 
+    alignSelf:"center", 
+    marginTop:40,  
+    marginLeft:10
+  },
 
   listitemcontainer:{
-
       marginLeft:10,
       flexShrink:1
-  }
+  },
+  button:{
+    position:"absolute" , 
+    alignSelf:"center", 
+    bottom:20, 
+    backgroundColor:"#0066ff", 
+    zIndex:100
+  }, 
+  listitemconstyle:{
+    backgroundColor:"ivory", 
+    borderRadius:15,     
+    padding:10,
+    paddingVertical:12,
+    flexShrink:1
+  }, 
 });
